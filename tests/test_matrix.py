@@ -69,6 +69,7 @@ EXPECTED: dict[str, list[str]] = {
     "Iterable[int]": ["GenericType", "IterableType"],
     "Awaitable[int]": ["AwaitableType", "GenericType"],
     "Any": ["AnyType"],
+    "te.Any": ["AnyType"],
     "Never": ["NeverType"],
     "NoReturn": ["NoReturnType"],
     "Self": ["SelfType"],

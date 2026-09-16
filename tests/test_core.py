@@ -19,9 +19,9 @@ def test_a_missing_attribute_fails_the_pattern_instead_of_raising() -> None:
     class Weird(Form, check=lambda tp: True, bare=True):
         __origin__: object
 
-    match int | str:
+    match int:
         case Weird(__origin__=_):
-            pytest.fail("a union has no __origin__")
+            pytest.fail("a plain class has no __origin__")
         case _:
             pass
 

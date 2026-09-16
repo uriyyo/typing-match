@@ -216,8 +216,11 @@ case CallableType(__args__=[*params, ret]): ...
 A `Callable[..., str]` puts `Ellipsis` in the first position and a
 `Callable[P, str]` a `ParamSpec`, both of which have matchers of their own.
 
-**`int | str` has no `__origin__`.** Only the `Union[int, str]` spelling does.
-`UnionType` therefore exposes `__args__` alone, and matches both spellings.
+**A union's `__origin__` is version-dependent.** Below Python 3.14, `int | str`
+is a `types.UnionType` and has no `__origin__` at all, while `Union[int, str]`
+does; from 3.14 both spellings are the same object and both have one.
+`UnionType` therefore exposes `__args__` alone, which is stable everywhere, and
+matches both spellings.
 
 A pattern asking for an attribute the object does not have simply does not
 match -- it never raises -- so version-dependent attributes such as

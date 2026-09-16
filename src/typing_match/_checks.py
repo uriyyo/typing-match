@@ -14,12 +14,14 @@ from typing_inspection.typing_objects import (
     DEPRECATED_ALIASES,
     NoneType,
     is_annotated,
+    is_any,
     is_classvar,
     is_final,
     is_notrequired,
     is_readonly,
     is_required,
     is_typevartuple,
+    is_union,
 )
 from typing_inspection.typing_objects import is_typevar as _is_typevar
 
@@ -139,8 +141,15 @@ def is_bare_deprecated_alias(obj: Any, /) -> bool:
         return False
 
 
+_CLASS_LIKE_FORMS = (is_annotated, is_any, is_union)
+
+
 def is_plain_class(obj: Any, /) -> TypeIs[type]:
-    return isinstance(obj, type) and get_origin(obj) is None and not is_annotated(obj)
+    return (
+        isinstance(obj, type)
+        and get_origin(obj) is None
+        and not any(check(obj) for check in _CLASS_LIKE_FORMS)
+    )
 
 
 def is_sentinel(obj: Any, /) -> TypeIs[Sentinel]:

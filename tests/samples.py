@@ -63,6 +63,7 @@ SAMPLES: dict[str, object] = {
     "Iterable[int]": collections.abc.Iterable[int],
     "Awaitable[int]": collections.abc.Awaitable[int],
     "Any": ty.Any,
+    "te.Any": te.Any,
     "Never": te.Never,
     "NoReturn": ty.NoReturn,
     "Self": te.Self,
