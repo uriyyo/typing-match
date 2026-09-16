@@ -1,14 +1,35 @@
 [project]
 name = "typing-match"
 version = "0.1.0"
-description = "Add your description here"
+description = "parse type annotations using match stmt"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "typing-extensions>=4.14",
+    "typing-inspection>=0.4.3",
+]
 
-[project.scripts]
-typing-match = "typing_match:main"
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.2",
+    "ty>=0.0.70",
+]
 
 [build-system]
 requires = ["uv_build>=0.12.3,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["src", "tests"]
+addopts = "--doctest-modules"
+
+[tool.ruff.lint.per-file-ignores]
+# The self-assignment is the aliasing mechanism, not a mistake.
+"src/typing_match/alias.py" = ["PLW0127"]
+# The legacy spellings (typing.List, Optional[...], functional NamedTuple) are
+# the data under test here, not annotations to be modernized.
+"tests/**" = ["PLC0105", "UP006", "UP007", "UP014", "UP045"]
+
+[tool.ty.environment]
+python = "./.venv"
